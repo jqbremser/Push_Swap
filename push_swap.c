@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:17:13 by jbremser          #+#    #+#             */
-/*   Updated: 2024/02/23 16:25:21 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:21:28 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,35 +74,131 @@ int    main(int argc, char **argv)
     t_node    *b;
 
     a = NULL;
-    b = NULL;
+    b = NULL;	
     if (argc == 1 || (argc == 2 && argv[1][0] == '\0'))  
         return (1);
     else if (argc == 2)
-		argv = ft_split(argv[1], ' ');
-	add_stack(argv + 1, &a);
-	if (check_sort(a) = 0
 	{
-		
+		argv = ft_split(argv[1], ' ');
+		add_stack(argv, &a);
 	}
-	print_stack(a);
+	else
+		add_stack(argv + 1, &a);
+	if (check_sort(a) == 0)
+	{
+		if (stack_len(a) == 2) //mistake here, yep! Fixed
+			sa(&a, false);//swap the two numbers
+		else if (stack_len(a) == 3)
+			sort_three(&a);//sort three alg	
+		else if (stack_len(a) > 3)
+			main_sort(&a, &b);		
+	}	
     free_stack(&a); //clean up your mess
 	return (0);
 }
 
-#include <stdio.h>
+// #include <stdio.h>
 
-void    print_stack(t_node *stack)  //DELETE BEFORE SUBMIT
-{
-    t_node    *ptr;
+// void    print_stack(t_node *stack)  //DELETE BEFORE SUBMIT
+// {
+//     t_node    *ptr;
 
-    ptr = stack;
+//     ptr = stack;
     
-    while (ptr)
-    {
-        ft_printf("%d\n", ptr->val);
-        ptr = ptr->next;
-    }
-}
+//     while (ptr)
+//     {
+//         ft_printf("val:%d\n", ptr->val);
+//         ft_printf("pushcost:%d\n", ptr->push_cost	);
+//         ft_printf("cheapest:%d\n", ptr->cheapest);
+//         ptr = ptr->next;
+//     }
+// }
 			//stack->val = atoi(argv[i]);  unnecessary because of next line
 // convert nb to integer with atoi and then put through add_end
 		//add_end(stack, ft_atoi(ft_split(argv))); // write this correctly
+
+		// pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+		// 				pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+
+
+		// 	pa(&a, &b, false);
+		// 	ft_printf("1a:");
+		// 	print_stack(a);
+		// 	ft_printf("1b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+
+		// 	pb(&a, &b, false);
+		// 	ft_printf("2a:");
+		// 	print_stack(a);
+		// 	ft_printf("2b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+
+		// 	pb(&a, &b, false);
+		// 	ft_printf("2a:");
+		// 	print_stack(a);
+		// 	ft_printf("2b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+			
+		// 	pb(&a, &b, false);
+		// 	ft_printf("2a:");
+		// 	print_stack(a);
+		// 	ft_printf("2b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+
+		// 	pb(&a, &b, false);
+		// 	ft_printf("2a:");
+		// 	print_stack(a);
+		// 	ft_printf("2b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n");
+			
+		// 	pb(&a, &b, false);
+		// 	ft_printf("2a:");
+		// 	print_stack(a);
+		// 	ft_printf("2b:");
+		// 	print_stack(b);
+		// 	ft_printf("\n"); 
