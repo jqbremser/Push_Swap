@@ -5,183 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 14:25:02 by jbremser          #+#    #+#             */
-/*   Updated: 2024/03/11 13:04:39 by jbremser         ###   ########.fr       */
+/*   Created: 2024/03/15 14:09:45 by jbremser          #+#    #+#             */
+/*   Updated: 2024/03/21 11:58:17 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_node	*min_node(t_node	*stack)
+static bool	check_sort(t_node	*stack)
 {
-	int n;
-	t_node *curr;
-	t_node *min;
-
-	n = INT_MAX;
 	if (!stack)
-		return (NULL);
-	curr = stack;
-	while (curr)
+		return (false);
+	while (stack->next)
 	{
-		if (curr->val <= n)
-		{
-			n = curr->val;
-			min = curr;
-			curr = curr->next;
-		}
-		else
-			curr = curr->next;
+		if (stack->val > stack->next->val)
+			return (false);
+		stack = stack->next;
 	}
-	return (min);
+	return (true);
 }
 
-t_node	*max_node(t_node	*stack)
+void	sort_time(t_node **a)
 {
-	int n;
-	t_node *curr;
-	t_node *max;
+	t_node	*b;
 
-	n = INT_MIN;
-	if (!stack)
-		return (NULL);
-	curr = stack;
-	while (curr)
+	b = NULL;
+	if (!(check_sort(*a)))
 	{
-		if (curr->val >= n)
-		{
-			n = curr->val;
-			max = curr;
-			// ft_printf("%d\n", n);
-			curr = curr->next;
-		}
-		else
-			curr = curr->next;
+		if (stack_len(*a) == 2)
+			sa(a);
+		if (stack_len(*a) == 3)
+			sort_three(a);
+		if (stack_len(*a) == 4 || stack_len(*a) == 5)
+			sort_f(a, &b);
+		else if (stack_len(*a) > 5)
+			main_sort(a, &b);
 	}
-	return (max);
+	else
+	{
+		free_stack(a);
+		exit(0);
+	}
 }
 
-// void	sort_three(t_node **stack) //Define a function that handles when stack `a` has three nodes, and sorts it
-// {
-// 	t_node	*biggest_node; //To store a pointer to the biggest node in stack `a`
-
-// 	biggest_node = find_max(*stack);
-// 	if (biggest_node == *stack) //Check if the current node is the biggest
-// 		ra(stack, false); //If so, rotate the top node to the bottom of the stack
-// 	else if ((*stack)->next == biggest_node) //Check if the second node is the biggest
-// 		rra(stack, false); //If so, reverse rotate the bottom node, to the top of the stack
-// 	if ((*stack)->nbr > (*stack)->next->nbr) //Check if the bottom node is the biggest, but the top node is higher than the second node
-// 		sa(stack, false); //If so, simply swap the top and second nodes
-// }
-void	sort_three(t_node	**stack)
+void	sort_three(t_node **stack)
 {
 	t_node	*max;
 
-	max = max_node(*stack);
-	if (max == goto_last(*stack))
-	{
-		if ((*stack)->val > (*stack)->next->val) // 2 1 3
-			sa(stack, false);
-	}
-	else if (max == (*stack))
-	{
-		if ((*stack)->next->val > (*stack)->next->next->val) // 3 2 1
-		{
-			sa(stack, false);
-			rra(stack, false);
-		}
-		else // 3 1 2
-			ra(stack, false);
-	}
-	else 
-	{
-		if ((*stack)->val < (*stack)->next->next->val) // 1 3 2
-		{
-			rra(stack, false);
-			sa(stack, false);
-		}
-		else // 2 3 1
-			rra(stack, false);
-	}
-}
-void	push_a_b(t_node **a, t_node **b)
-{
-	t_node	*cheap_node;
-	
-	cheap_node = get_cheap(*a);
-	if ((cheap_node->median == 1) && (cheap_node->target->median = 1)) // cheap 'a' node and its target are both above median:
-		rotate_a_b(a, b, cheap_node);
-	else if ((cheap_node->median == 0) && (cheap_node->target->median = 0)) 
-		revrotate_b_a(a, b, cheap_node); //executes when neither node is at the top
-	prep_push(a, cheap_node, 'a');
-	prep_push(b, cheap_node->target, 'b');
-	pb(a, b, false);
-}
-void	rotate_a_b(t_node	**a, t_node	**b, t_node	*cheap_node)
-{
-	while ((*b != cheap_node->target) && (*a != cheap_node))
-		rr(a, b, false); // rotate until cheap node is at top of a, and its target is at top of b
-	set_index(*a); //reset node positions
-	set_index(*b);
-}
-void	revrotate_b_a(t_node	**a, t_node	**b, t_node	*cheap_node)
-{
-	while ((*b != cheap_node->target) && (*a != cheap_node))
-		rrr(a, b, false); 
-	set_index(*a); 
-	set_index(*b);
+	max = find_max(*stack);
+	if (max == *stack)
+		ra(stack);
+	else if (max == (*stack)->next)
+		rra(stack);
+	if (!(check_sort(*stack)))
+		sa(stack);
 }
 
-void	push_b_a(t_node **a, t_node **b)
+void	sort_f(t_node	**a, t_node	**b)
 {
-	prep_push(a, (*b)->target, 'a');
-	pa(a, b, false);
-}
+	t_node	*min;
 
-void	prep_push(t_node **stack, t_node *top, char a_b)
-{
-	if (*stack != top)
+	while (stack_len(*a) > 3)
 	{
-		if (a_b == 'a')
-			{
-				if (top->median == 1)
-					ra(stack, false);
-				else
-					rra(stack, false);	
-			}
-		else if (a_b == 'b')
-		{
-				if (top->median == 1)
-					rb(stack, false);
-				else
-					rrb(stack, false);	
-		}	
+		min = find_min(*a);
+		set_index(*a);
+		move_to_top(a, min, 'a');
+		pb(a, b);
 	}
+	sort_three(a);
+	while (*b)
+		pa(a, b);
 }
-t_node	*get_cheap(t_node *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack)
-	{
-		if (stack->cheapest)
-			return (stack);
-		stack = stack->next;	
-	}
-	return (NULL);
-}
-
 
 void	main_sort(t_node	**a, t_node	**b)
 {
-	int	a_len;
+	int	len_a;
 
-	a_len = stack_len(*a);
-	if (a_len-- > 3 && !check_sort(*a)) //'a' has more than three nodes and aren't stored
-		pb(a, b, false);
-	if (a_len-- > 3 && !check_sort(*a)) //'a' still has more than three nodes and aren't stored
-		pb(a, b, false);
-	while (a_len-- > 3 && !check_sort(*a))
+	len_a = stack_len(*a);
+	if (len_a-- > 3 && !check_sort(*a))
+		pb(a, b);
+	if (len_a-- > 3 && !check_sort(*a))
+		pb(a, b);
+	while (len_a-- > 3 && !check_sort(*a))
 	{
 		init_a(*a, *b);
 		push_a_b(a, b);
@@ -193,6 +98,5 @@ void	main_sort(t_node	**a, t_node	**b)
 		push_b_a(a, b);
 	}
 	set_index(*a);
-	check_top_min(a);
+	min_to_top(a);
 }
-

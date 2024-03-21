@@ -1,56 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   rev_rotate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 15:24:12 by jbremser          #+#    #+#             */
-/*   Updated: 2024/03/19 12:35:13 by jbremser         ###   ########.fr       */
+/*   Created: 2024/03/15 15:46:25 by jbremser          #+#    #+#             */
+/*   Updated: 2024/03/19 12:34:07 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	rotate(t_node	**stack)
+static void	rev_rotate(t_node	**stack)
 {
-	t_node	*temp;
 	t_node	*last;
+	t_node	*bottom;
 
-	if (!*stack || (*stack)->next == (NULL))
+	if (!*stack || !(*stack)->next)
 		return ;
 	last = find_last(*stack);
-	temp = (*stack)->next;
-	temp->prev = (NULL);
-	(*stack)->next = (NULL);
+	bottom = last->prev;
+	bottom->next = (NULL);
+	last->next = *stack;
+	last->prev = (NULL);
 	(*stack)->prev = last;
-	last->next = (*stack);
-	(*stack) = temp;
+	*stack = last;
 }
 
-void	ra(t_node	**a)
+void	rra(t_node	**a)
 {
-	rotate(a);
-	ft_printf("ra\n");
+	rev_rotate(a);
+	ft_printf("rra\n");
 }
 
-void	rb(t_node	**b)
+void	rrb(t_node	**b)
 {
-	rotate(b);
-	ft_printf("rb\n");
+	rev_rotate(b);
+	ft_printf("rrb\n");
 }
 
-void	rr(t_node	**a, t_node	**b)
+void	rrr(t_node	**a, t_node	**b)
 {
-	rotate(a);
-	rotate(b);
-	ft_printf("rr\n");
+	rev_rotate(a);
+	rev_rotate(b);
+	ft_printf("rrr\n");
 }
 
-void	rotate_a_b(t_node	**a, t_node	**b, t_node	*cheap_node)
+void	rev_rotate_a_b(t_node	**a, t_node	**b, t_node	*cheap_node)
 {
 	while ((*b != cheap_node->target) && (*a != cheap_node))
-		rr(a, b);
+		rrr(a, b);
 	set_index(*a);
 	set_index(*b);
 }

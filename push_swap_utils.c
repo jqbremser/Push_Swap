@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 16:20:33 by jbremser          #+#    #+#             */
-/*   Updated: 2024/03/04 14:29:22 by jbremser         ###   ########.fr       */
+/*   Created: 2024/03/14 12:41:16 by jbremser          #+#    #+#             */
+/*   Updated: 2024/03/19 14:13:44 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ long	ft_atol(const char	*s)
 
 	result = 0;
 	sign = 1;
-	while (*s == ' ' || *s == '\t' || *s == '\n'|| \
+	while (*s == ' ' || *s == '\t' || *s == '\n' || \
 	*s == '\r' || *s == '\f' || *s == '\v')
 		s++;
 	if (*s == '-' || *s == '+')
@@ -32,53 +32,78 @@ long	ft_atol(const char	*s)
 		result = result * 10 + (*s++ - '0');
 	return (result * sign);
 }
-// int	stack_len(t_node *stack)
-// {
-// 	int n;
-	
-// 	if (!stack)
-// 		return (0);
-// 	n = 0;
-	// temp = stack;
-// 	while (stack)	
-	// t_node *temp;
-		
-// }
 
-
-int stack_len(t_node *stack)
+t_node	*find_min(t_node	*stack)
 {
-	int n;
+	t_node	*min;
+	t_node	*curr;
+	int		i;
+
+	i = INT_MAX;
+	if (!stack)
+		return (NULL);
+	curr = stack;
+	while (curr)
+	{
+		if (curr->val <= i)
+		{
+			i = curr->val;
+			min = curr;
+			curr = curr->next;
+		}
+		else
+			curr = curr->next;
+	}
+	return (min);
+}
+
+t_node	*find_max(t_node	*stack)
+{
+	t_node	*max;
+	t_node	*curr;
+	int		i;
+
+	i = INT_MIN;
+	if (!stack)
+		return (NULL);
+	curr = stack;
+	while (curr)
+	{
+		if (curr->val >= i)
+		{
+			i = curr->val;
+			max = curr;
+			curr = curr->next;
+		}
+		else
+			curr = curr->next;
+	}
+	return (max);
+}
+
+t_node	*find_last(t_node	*stack)
+{
+	t_node	*temp;
 
 	if (!stack)
+		return (NULL);
+	temp = stack;
+	while (temp->next)
+		temp = temp->next;
+	return (temp);
+}
+
+int	stack_len(t_node *stack)
+{
+	int	i;
+
+	i = 0;
+	if (!stack)
 		return (0);
-	n = 0;
 	while (stack)
 	{
 		stack = stack->next;
-		n++;
+		i++;
 	}
-	return (n);
-}
-
-int	check_sort(t_node	*stack)
-{
-	if (!stack)
-		return (2);
-	while (stack->next)
-	{
-		if (stack->val > stack->next->val)
-			return (0);
-		stack = stack->next;	
-	}
-	return(1);
-}
-
-t_node	*goto_last(t_node *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
+	return (i);
 }
