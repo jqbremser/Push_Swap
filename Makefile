@@ -6,7 +6,7 @@
 #    By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 11:37:59 by jbremser          #+#    #+#              #
-#    Updated: 2024/03/19 14:02:51 by jbremser         ###   ########.fr        #
+#    Updated: 2024/03/25 15:50:20 by jbremser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ CFILES =	push_swap.c \
 
 OFILES = $(CFILES:.c=.o)
 			
-LIBFT = LibFT/libft.a 
+LIBFT = libft/libft.a 
 
 all: $(NAME)
 

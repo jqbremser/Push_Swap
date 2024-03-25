@@ -6,14 +6,14 @@
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:37:37 by jbremser          #+#    #+#             */
-/*   Updated: 2024/03/19 12:42:56 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:50:37 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "LibFT/libft.h"
+# include "libft/libft.h"
 # include <stdlib.h>
 # include <stdbool.h>
 

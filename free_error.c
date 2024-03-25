@@ -6,7 +6,7 @@
 /*   By: jbremser <jbremser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:02:28 by jbremser          #+#    #+#             */
-/*   Updated: 2024/03/19 12:19:01 by jbremser         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:29:51 by jbremser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	free_stack(t_node	**stack)
 	t_node	*temp;
 	t_node	*curr;
 
-	if (!stack)
-		return ;
+   
 	curr = *stack;
 	temp = NULL;
 	while (curr)
@@ -81,11 +80,3 @@ bool	error_dup(char **av, int n)
 	}
 	return (0);
 }
-
-// void	error_n_exit(char **arguments, int split_flag)
-// {
-// 	if (split_flag)
-// 		free_split(arguments);
-// 	write(2, "Error\n", 6);
-// 	exit (1);
-// }
